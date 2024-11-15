@@ -5,4 +5,8 @@ import org.springframework.stereotype.Repository
 import sandbox.kotlin.entities.BookEntity
 
 @Repository
-interface BookRepository : JpaRepository<BookEntity, String>
+interface BookRepository : JpaRepository<BookEntity, String> {
+    fun findByAuthorEntity(id: Long): List<BookEntity>
+}
+
+

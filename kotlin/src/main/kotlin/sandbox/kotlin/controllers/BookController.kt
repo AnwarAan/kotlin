@@ -25,8 +25,7 @@ import sandbox.kotlin.toBookUpdateRequest
 class BookController(val bookService: BookService) {
     @PutMapping
     fun createFullUpdateBook(
-        @PathVariable("isbn") isbn: String,
-        @RequestBody book: BookSummaryDto
+        @PathVariable("isbn") isbn: String, @RequestBody book: BookSummaryDto
     ): ResponseEntity<BookSummaryDto> {
         try {
             val (save, isCreated) = bookService.createUpdate(isbn, book.toBookSummary())
@@ -55,22 +54,14 @@ class BookController(val bookService: BookService) {
 
     @PatchMapping
     fun patchBook(
-        @PathVariable("isbn") isbn: String,
-        @RequestBody bookUpdateRequestDto: BookUpdateRequestDto
+        @PathVariable("isbn") isbn: String, @RequestBody bookUpdateRequestDto: BookUpdateRequestDto
     ): ResponseEntity<BookSummaryDto> {
         try {
-            val update = bookService.partial(isbn, bookUpdateRequestDto.toBookUpdateRequest())
+            val update = bookService.partialUpdate(isbn, bookUpdateRequestDto.toBookUpdateRequest())
             return ResponseEntity(update.toBookSummaryDto(), HttpStatus.OK)
         } catch (ex: IllegalArgumentException) {
             return ResponseEntity(HttpStatus.BAD_REQUEST)
         }
     }
 
-    @DeleteMapping(path = ["/{isbn}"])
-    fun deleteBook(
-        @PathVariable("isbn") isbn: String,
-    ): ResponseEntity<Unit> {
-        bookService.delete(isbn)
-        return ResponseEntity(HttpStatus.NO_CONTENT)
-    }
 }

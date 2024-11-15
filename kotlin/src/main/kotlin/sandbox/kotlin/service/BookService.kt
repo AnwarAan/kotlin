@@ -8,6 +8,5 @@ interface BookService {
     fun createUpdate(isbn: String, bookSummary: BookSummary): Pair<BookEntity, Boolean>
     fun list(authorId: Long? = null): List<BookEntity>
     fun get(isbn: String): BookEntity?
-    fun partial(isbn: String, bookUpdateRequest: BookUpdateRequest): BookEntity
-    fun delete(isbn: String)
+    fun partialUpdate(isbn: String, bookUpdateRequest: BookUpdateRequest): BookEntity
 }
